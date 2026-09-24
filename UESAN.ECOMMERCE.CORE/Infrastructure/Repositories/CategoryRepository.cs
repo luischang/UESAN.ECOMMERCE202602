@@ -4,11 +4,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using UESAN.ECOMMERCE.CORE.Core.Entities;
+using UESAN.ECOMMERCE.CORE.Core.Interfaces;
 using UESAN.ECOMMERCE.CORE.Infrastructure.Data;
 
 namespace UESAN.ECOMMERCE.CORE.Infrastructure.Repositories
 {
-    public class CategoryRepository
+    public class CategoryRepository : ICategoryRepository
     {
         private readonly StoreDbContext _dbContext;
 
@@ -17,7 +18,7 @@ namespace UESAN.ECOMMERCE.CORE.Infrastructure.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task<IEnumerable<Category>> GetCategories() 
+        public async Task<IEnumerable<Category>> GetCategories()
         {
             var categories = await _dbContext.Category.ToListAsync();
             return categories;
@@ -45,7 +46,8 @@ namespace UESAN.ECOMMERCE.CORE.Infrastructure.Repositories
                                 .Category
                                 .Where(c => c.Id == category.Id)
                                 .FirstOrDefaultAsync();
-            if (existingCategory != null) {
+            if (existingCategory != null)
+            {
                 existingCategory.Description = category.Description;
                 var rows = await _dbContext.SaveChangesAsync();
                 return rows > 0;
