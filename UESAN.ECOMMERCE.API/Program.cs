@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using UESAN.ECOMMERCE.CORE.Core.Interfaces;
+using UESAN.ECOMMERCE.CORE.Core.Services;
 using UESAN.ECOMMERCE.CORE.Infrastructure.Data;
 using UESAN.ECOMMERCE.CORE.Infrastructure.Repositories;
 
@@ -14,6 +15,7 @@ builder
         options.UseSqlServer(cnx));
 
 builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
+builder.Services.AddTransient<ICategoryService, CategoryService>();
 
 
 builder.Services.AddControllers();
