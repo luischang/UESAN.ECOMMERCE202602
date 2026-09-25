@@ -20,7 +20,10 @@ namespace UESAN.ECOMMERCE.CORE.Infrastructure.Repositories
 
         public async Task<IEnumerable<Category>> GetCategories()
         {
-            var categories = await _dbContext.Category.ToListAsync();
+            var categories = await _dbContext
+                                .Category
+                                .Where(c=>c.IsActive==true)
+                                .ToListAsync();
             return categories;
         }
 
@@ -28,14 +31,15 @@ namespace UESAN.ECOMMERCE.CORE.Infrastructure.Repositories
         {
             var category = await _dbContext
                                 .Category
-                                .Where(c => c.Id == id)
+                                .Where(c => c.Id == id && c.IsActive==true)
                                 .FirstOrDefaultAsync();
             return category;
         }
 
         public async Task<bool> CreateCategory(Category category)
         {
-            _dbContext.Category.AddAsync(category);
+            category.IsActive = true;
+            await _dbContext.Category.AddAsync(category);
             var rows = await _dbContext.SaveChangesAsync();
             return rows > 0;
         }
