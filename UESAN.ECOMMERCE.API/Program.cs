@@ -3,6 +3,7 @@ using UESAN.ECOMMERCE.CORE.Core.Interfaces;
 using UESAN.ECOMMERCE.CORE.Core.Services;
 using UESAN.ECOMMERCE.CORE.Infrastructure.Data;
 using UESAN.ECOMMERCE.CORE.Infrastructure.Repositories;
+using UESAN.ECOMMERCE.CORE.Infrastructure.Shared;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +19,10 @@ builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
 builder.Services.AddTransient<ICategoryService, CategoryService>();
 builder.Services.AddTransient<IProductRepository, ProductRepository>();
 builder.Services.AddTransient<IProductService, ProductService>();
+builder.Services.AddTransient<IUserRepository, UserRepository>();
+builder.Services.AddTransient<IUserService, UserService>();
+
+builder.Services.AddSharedInfrastructure(_config);
 
 
 builder.Services.AddControllers();
